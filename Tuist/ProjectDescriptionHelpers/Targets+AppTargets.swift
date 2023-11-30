@@ -32,7 +32,8 @@ public extension Targets.App {
 
     private static var settings: SettingsDictionary {
         [
-            "ENABLE_HARDENED_RUNTIME": "YES"
+            "ENABLE_HARDENED_RUNTIME": "YES",
+            "DEVELOPMENT_TEAM": .string(Environment.teamName)
         ]
     }
 
@@ -49,7 +50,7 @@ public extension Targets.App {
                 .reference(target: Targets.TuistBarToolKit.sources),
                 .target(name: "TuistBarToolUI")
             ],
-            settings: .settings(base: settings)
+            settings: .settings(base: settings, defaultSettings: .recommended)
         )
     }
 }
