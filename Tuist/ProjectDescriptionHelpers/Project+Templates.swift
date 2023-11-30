@@ -8,10 +8,15 @@ import ProjectDescription
 extension Project {
     /// Helper function to create the Project for this ExampleApp
     public static func app(name: String, platform: Platform, additionalTargets: [String]) -> Project {
+        let dep: [TargetDependency] = if name == "TuistBarToolUI" {
+            [.target(name: "TuistBarToolKit")]
+        } else {
+            []
+        }
         var targets = makeAppTargets(
             name: name,
             platform: platform,
-            dependencies: additionalTargets.map { TargetDependency.target(name: $0) }
+            dependencies: additionalTargets.map { TargetDependency.target(name: $0) } + dep
         )
         targets += additionalTargets.flatMap({ makeFrameworkTargets(name: $0, platform: platform) })
         return Project(
@@ -24,7 +29,7 @@ extension Project {
     // MARK: - Private
 
     /// Helper function to create a framework target and an associated unit test target
-    private static func makeFrameworkTargets(name: String, platform: Platform) -> [Target] {
+    public static func makeFrameworkTargets(name: String, platform: Platform, dependencies: [TargetDependency] = []) -> [Target] {
         let sources = Target(
             name: name,
             platform: platform,
@@ -33,7 +38,7 @@ extension Project {
             infoPlist: .default,
             sources: ["Targets/\(name)/Sources/**"],
             resources: [],
-            dependencies: []
+            dependencies: dependencies
         )
         let tests = Target(
             name: "\(name)Tests",
@@ -89,5 +94,14 @@ extension Project {
             ]
         )
         return [mainTarget, testTarget]
+    }
+}
+
+public enum Targets {}
+
+extension TargetDependency {
+
+    static func reference(target: Target) -> TargetDependency {
+        .target(name: target.name)
     }
 }
