@@ -76,8 +76,8 @@ then
 
     zip -qr ./release.zip $CI_DEVELOPER_ID_SIGNED_APP_PATH
 
-    create_release($USER, TuistBarTool, $TOKEN, $CURRENT_PROJECT_VERSION)
-    upload_release_file($TOKEN, ./release.zip, $CURRENT_PROJECT_VERSION)
+    create_release $USER TuistBarTool $TOKEN $CURRENT_PROJECT_VERSION
+    upload_release_file $TOKEN ./release.zip $CURRENT_PROJECT_VERSION
 
 else
     echo "Archive path isn't available"
