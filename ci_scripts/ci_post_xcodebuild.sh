@@ -71,7 +71,7 @@ then
     # Move up to parent directory
     cd ..
     echo "$CI_DEVELOPER_ID_SIGNED_APP_PATH"
-    CURRENT_PROJECT_VERSION=$(xcodebuild -project TuistBarTool.xcodeproj -showBuildSettings | grep "MARKETING_VERSION" | sed 's/[ ]*MARKETING_VERSION = //')
+    CURRENT_PROJECT_VERSION=1.0
     echo "Version $CURRENT_PROJECT_VERSION"
 
     zip -qr ./release.zip $CI_DEVELOPER_ID_SIGNED_APP_PATH
