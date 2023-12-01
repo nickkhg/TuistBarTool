@@ -74,10 +74,11 @@ then
     CURRENT_PROJECT_VERSION=1.0
     echo "Version $CURRENT_PROJECT_VERSION"
 
+    cd $CI_DEVELOPER_ID_SIGNED_APP_PATH
     zip -qr ./release.zip $CI_DEVELOPER_ID_SIGNED_APP_PATH
 
     create_release $USER TuistBarTool $TOKEN $CURRENT_PROJECT_VERSION
-    upload_release_file $TOKEN ./release.zip $CURRENT_PROJECT_VERSION
+    upload_release_file $TOKEN ./release.zip "Release_$(CURRENT_PROJECT_VERSION).zip"
 
 else
     echo "Archive path isn't available"
